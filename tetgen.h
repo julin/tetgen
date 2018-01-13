@@ -44,6 +44,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <math.h>
 #include <time.h>
 
@@ -108,12 +109,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 typedef int(*PrintFun)(const char *format, ...);
-inline int MyPrintFun(const char *format, ...){ return 0; }
+inline int MyPrintFun(const char *format, ...)
+{ 
+  char buffer[9062] = { 0 };
+  va_list args;
+  va_start(args, format);
+  vsprintf(buffer, format, args);
+  va_end(args);
+  return printf("%s", buffer);
+}
 
 class tetgenio {
 
 public:
-
+  static PrintFun  gPrintFun;
   // A "polygon" describes a simple polygon (no holes). It is not necessarily
   //   convex. Each polygon contains a number of corners (points) and the same
   //   number of sides (edges).  The points of the polygon must be given in
@@ -575,7 +584,7 @@ public:
 
   // Constructor & destructor.
   PrintFun printf;
-  tetgenio() { printf = MyPrintFun; initialize(); }
+  tetgenio() { printf = tetgenio::gPrintFun ? tetgenio::gPrintFun:MyPrintFun; initialize(); }
   ~tetgenio() {deinitialize();}
 
 }; // class tetgenio
@@ -711,7 +720,7 @@ public:
   // Initialize all variables.
   tetgenbehavior()
   {
-    printf = MyPrintFun;
+    printf = tetgenio::gPrintFun ? tetgenio::gPrintFun : MyPrintFun;
     plc = 0;
     psc = 0;
     refine = 0;
@@ -2260,7 +2269,7 @@ public:
   PrintFun printf;
   tetgenmesh()
   {
-    printf = MyPrintFun;
+    printf = tetgenio::gPrintFun ? tetgenio::gPrintFun : MyPrintFun;
     initializetetgenmesh();
   }
 
