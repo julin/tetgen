@@ -107,6 +107,9 @@
 //                                                                           //
 ///////////////////////////////////////////////////////////////////////////////
 
+typedef int(*PrintFun)(const char *format, ...);
+inline int MyPrintFun(const char *format, ...){ return 0; }
+
 class tetgenio {
 
 public:
@@ -571,7 +574,8 @@ public:
   }
 
   // Constructor & destructor.
-  tetgenio() {initialize();}
+  PrintFun printf;
+  tetgenio() { printf = MyPrintFun; initialize(); }
   ~tetgenio() {deinitialize();}
 
 }; // class tetgenio
@@ -594,7 +598,7 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 
 class tetgenbehavior {
-
+  PrintFun printf;
 public:
 
   // Switches of TetGen. 
@@ -707,6 +711,7 @@ public:
   // Initialize all variables.
   tetgenbehavior()
   {
+    printf = MyPrintFun;
     plc = 0;
     psc = 0;
     refine = 0;
@@ -2252,8 +2257,10 @@ public:
     initializetetgenmesh();
   }
 
+  PrintFun printf;
   tetgenmesh()
   {
+    printf = MyPrintFun;
     initializetetgenmesh();
   }
 
