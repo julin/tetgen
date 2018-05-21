@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 2.8.12)
 project(tetgen)
 
 add_library(tetgen STATIC tetgen.h tetgen.cxx predicates.cxx)
+
+configure_runtime()
+
 if(WINDOWS)
   add_definitions(-D_USE_MATH_DEFINES -DNOMAIN -DNO_TIMER -DNOMINMAX -DMESQUITE_STATIC_LIB -DHAVE_CLOCK -D_CRT_SECURE_NO_DEPRECATE -D_SCL_SECURE_NO_DEPRECATE)
   set_target_properties(tetgen PROPERTIES LINK_FLAGS_RELEASE "/nodefaultlib:LIBCMT")
