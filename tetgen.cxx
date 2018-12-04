@@ -16,7 +16,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "tetgen.h"
-PrintFun tetgenio::gPrintFun = nullptr;
+#include <fstream>
+
+auto n_msger = [](const char *format, ...){
+  FILE *fp = fopen("MRMeshing.log", "a");
+  va_list ap;
+  va_start(ap, format);
+  char buffer[9062] = { 0 };
+  vsprintf(buffer, format, ap);
+  va_end(ap);
+  fprintf(fp, buffer);
+  return 0;
+};
+PrintFun tetgenio::gPrintFun = n_msger;
 //// io_cxx ///////////////////////////////////////////////////////////////////
 ////                                                                       ////
 ////                                                                       ////
@@ -3067,6 +3079,13 @@ bool tetgenbehavior::parse_commandline(int argc, char **argv)
           j++;
           if ((argv[i][j + 1] >= '0') && (argv[i][j + 1] <= '9')) {
             addsteiner_algo = (argv[i][j + 1] - '0');
+            j++;
+          }
+        }
+        if ((argv[i][j + 1] == '/') || (argv[i][j + 1] == ',')) {
+          j++;
+          if ((argv[i][j + 1] >= '0') && (argv[i][j + 1] <= '9')) {
+            addsteiner_splitseg = (argv[i][j + 1] - '0');
             j++;
           }
         }
@@ -19411,13 +19430,13 @@ int tetgenmesh::addsteiner4recoversegment(face* misseg, int splitsegflag)
         //   consists of 'endi' tets: abtets[0], abtets[1], ..., 
         //   abtets[endi-1], and P2 consists of 'n - endi' tets: 
         //   abtets[endi], abtets[endi+1], abtets[n-1].
-        if (endi > 2) { // P1
+        if (b->addsteiner_splitseg &&endi > 2) { // P1
           // There are at least 3 tets in the first part.
           if (add_steinerpt_in_schoenhardtpoly(abtets, endi, 0)) {
             success++;
           }
         }
-        if ((n - endi) > 2) { // P2
+        if (b->addsteiner_splitseg && (n - endi) > 2) { // P2
           // There are at least 3 tets in the first part.
           if (add_steinerpt_in_schoenhardtpoly(&(abtets[endi]), n - endi, 0)) {
             success++;
@@ -19586,7 +19605,7 @@ int tetgenmesh::recoversegments(arraypool *misseglist, int fullsearch,
     } else {
       if (steinerflag > 0) {
         // Try to recover the segment but do not split it.
-        if (addsteiner4recoversegment(&sseg, 0)) {
+        if (b->addsteiner_splitseg && addsteiner4recoversegment(&sseg, 0)) {
           success = 1;
         }
         if (!success && (steinerflag > 1)) {
@@ -21705,7 +21724,7 @@ void tetgenmesh::recoverboundary(clock_t& tv)
     }
   }
 
-  if (misseglist->objects > 0) {
+  if (b->addsteiner_splitseg && misseglist->objects > 0) {
     // Third, trying to recover segments by doing more flips (fullsearch)
     //   and adding Steiner points in the volume.
     while (misseglist->objects > 0) {
@@ -21752,7 +21771,7 @@ void tetgenmesh::recoverboundary(clock_t& tv)
   }
 
 
-  if (st_segref_count > 0) {
+  if (b->addsteiner_splitseg && st_segref_count > 0) {
     // Try to remove the Steiner points added in segments.
     bak_segref_count = st_segref_count;
     bak_volref_count = st_volref_count;
@@ -31363,7 +31382,7 @@ void tetrahedralize(tetgenbehavior *b, tetgenio *in, tetgenio *out,
       printf("Exterior tets removal seconds:  %g\n",((REAL)(ts[2]-ts[1]))/cps);
     }
 
-    if (b->nobisect) { // -Y
+    if (b->addsteiner_splitseg && b->nobisect) { // -Y
       if (m.subvertstack->objects > 0l) {
         m.suppresssteinerpoints();
 
