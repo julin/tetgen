@@ -18,17 +18,7 @@
 #include "tetgen.h"
 #include <fstream>
 
-auto n_msger = [](const char *format, ...){
-  FILE *fp = fopen("MRMeshing.log", "a");
-  va_list ap;
-  va_start(ap, format);
-  char buffer[9062] = { 0 };
-  vsprintf(buffer, format, ap);
-  va_end(ap);
-  fprintf(fp, buffer);
-  return 0;
-};
-PrintFun tetgenio::gPrintFun = n_msger;
+PrintFun tetgenio::gPrintFun = nullptr;
 //// io_cxx ///////////////////////////////////////////////////////////////////
 ////                                                                       ////
 ////                                                                       ////
