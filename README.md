@@ -296,8 +296,8 @@ The -q switch adds new points to improve the mesh quality. It can be used togeth
 
 TetGen enforces two quality constraints on tetrahedra: a maximum radius-edge ratio bound and a minimum dihedral angle bound. By default, these two constraints are 2.0 and 0 degrees, respectively. These quality constraints may be specified after the -q. The two constraints are separated by a slash ‘/’ (or ‘,’):
 
-    - the first constraint is the maximum allowable radius-edge ratio, default is 2.0; and
-    - the second constraint is the minimum allowable dihedral angle, default is 0 (degree);
+- the first constraint is the maximum allowable radius-edge ratio, default is 2.0; and
+- the second constraint is the minimum allowable dihedral angle, default is 0 (degree);
 
 of any tetrahedron. For example, -q1.2 specifies a maximum radius-edge ratio of 1.2; -q1.2/10 specifies the same plus a minimum dihedral angle of 10 degrees. -q/7 specifies the default radius-edge ratio bound of 2 and a dihedral angle bound of 7 degrees.
 
