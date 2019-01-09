@@ -657,6 +657,7 @@ public:
   int nobisect_nomerge;                                            // '-Y', 1.
   int supsteiner_level;                                           // '-Y/', 2.
   int addsteiner_algo;                                           // '-Y//', 1.
+  int addsteiner_splitseg;                                      // '-Y///', 0.
   int coarsen_param;                                               // '-R', 0.
   int weighted_param;                                              // '-w', 0.
   int fliplinklevel;                                                    // -1.
@@ -766,6 +767,7 @@ public:
     nobisect_nomerge = 1;
     supsteiner_level = 2;
     addsteiner_algo = 1;
+    addsteiner_splitseg = 0;
     coarsen_param = 0;
     weighted_param = 0;
     fliplinklevel = -1; 
