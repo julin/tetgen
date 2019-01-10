@@ -296,7 +296,7 @@ tetgen -pYY///1 cami1a.poly
 
 This will produce a tetrahedral mesh of the PLC shown in Figure below:
 
-![](E:\ppt及文档\bl\网格截图\tetgen\fig14.2.png)
+![输入图片说明](https://images.gitee.com/uploads/images/2019/0110/211244_e30b7c5d_1259980.png "fig14.2.png")
 
 Other output switches are available by adding the switches: -f (output all faces including interior faces), -e (output all edges including interior edges), and -n (output the adjacency graph of the tetrahedra).
 
