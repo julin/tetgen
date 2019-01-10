@@ -288,6 +288,16 @@ cami1a.1.edge	The list of boundary edges of the CDT.
 ```
 Table 6: The output files by command: tetgen -p cami1a.poly
 
+if the -Y/// switch is ‘1’, the input boundary edges and faces of the PLC are preserved as much as possible in the generated tetrahedral mesh. Steiner points (if there exists any) will be added  in the middle of edges, but sometimes in the interior space of the PLC. For example, run the following command:
+
+```
+tetgen -pYY///1 cami1a.poly
+```
+
+This will produce a tetrahedral mesh of the PLC shown in Figure below:
+
+![](E:\ppt及文档\bl\网格截图\tetgen\fig14.2.png)
+
 Other output switches are available by adding the switches: -f (output all faces including interior faces), -e (output all edges including interior edges), and -n (output the adjacency graph of the tetrahedra).
 
 #### Quality mesh generation (-q)
