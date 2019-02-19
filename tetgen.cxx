@@ -11007,6 +11007,8 @@ int tetgenmesh::hilbert_split(point* vertexarray,int arraysize,int gc0,int gc1,
 
   // Partition the vertices into left- and right-arrays.
   if (d > 0) {
+    int lsti = i, lstj = j;
+
     do {
       for (; i < arraysize; i++) {      
         if (vertexarray[i][axis] >= split) break;
@@ -11016,13 +11018,17 @@ int tetgenmesh::hilbert_split(point* vertexarray,int arraysize,int gc0,int gc1,
       }
       // Is the partition finished?
       if (i == (j + 1)) break;
+      if (i == lsti && j == lstj)
+        break;
       // Swap i-th and j-th vertices.
       swapvert = vertexarray[i];
       vertexarray[i] = vertexarray[j];
       vertexarray[j] = swapvert;
+      lsti = i; lstj = j;
       // Continue patitioning the array;
     } while (true);
   } else {
+    int lsti = i, lstj = j;
     do {
       for (; i < arraysize; i++) {      
         if (vertexarray[i][axis] <= split) break;
@@ -11031,11 +11037,15 @@ int tetgenmesh::hilbert_split(point* vertexarray,int arraysize,int gc0,int gc1,
         if (vertexarray[j][axis] > split) break;
       }
       // Is the partition finished?
-      if (i == (j + 1)) break;
+      if (i == (j + 1))
+        break;
+      if (i == lsti && j == lstj)
+        break;
       // Swap i-th and j-th vertices.
       swapvert = vertexarray[i];
       vertexarray[i] = vertexarray[j];
       vertexarray[j] = swapvert;
+      lsti = i; lstj = j;
       // Continue patitioning the array;
     } while (true);
   }
