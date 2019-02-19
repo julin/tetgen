@@ -62,7 +62,7 @@ An overview of all command line switches and a short description follow. These s
 -i	Inserts a list of additional points.
 -O	Specifies the level of mesh optimization.
 -S	Specifies maximum number of added points.
--T	Sets a tolerance for coplanar test (default 10−8).
+-T	Sets a tolerance for coplanar test (default 10-8).
 -X	Suppresses use of exact arithmetic.
 -M	No merge of coplanar facets or very close vertices.
 -w	Generates weighted Delaunay (regular) triangulation.
@@ -119,7 +119,7 @@ Statistics:
 ```
 Figure 12 shows an example of an input point set (100 vertices) and the generated DT and its convex hull.
 
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205834_111ba4b2_1259980.png "fig12.png")
+![fig12](https://images.gitee.com/uploads/images/2019/0109/205834_111ba4b2_1259980.png "fig12.png")
 
 Figure 12: From left to right: a set of 100 randomly distributed points in a unit cube, the Delaunay tetrahedralization, and the convex hull of the point set, respectively.
 
@@ -140,19 +140,18 @@ TetGen will output the four files listed in Table 4.
 test.1.node	The list of vertices (same as input) of the DT.
 test.1.ele	The list of tetrahedra of the DT.
 test.1.face	The list of all faces of the DT.
- 	Convex hull faces have a face marker ‘1’.
- 	Interior faces have a face marker ‘0’.
+ 	Convex hull faces have a face marker '1'
+ 	Interior faces have a face marker '0'
 test.1.edge	The list of all edges of the DT.
- 	Convex hull edges have an edge marker ‘1’.
- 	Interior edges have an edge marker ‘0’.
+ 	Convex hull edges have an edge marker '1'
+ 	Interior edges have an edge marker '0'
 ```
 Table 4: The output files by the command: tetgen -fe test.node.
 
 The adjacency graph of the list of tetrahedra of the DT can be obtained by adding the -n switch in the command line. An additional file, test.1.neigh, will be output by TetGen, see file format .neigh for details.
+ �� R4, where w is the weight (a real value) of the point p = {px, py, pz} �� R3 [7].
 
-The -w switch creates a weighted Delaunay tetrahedralization from a set of weighted points. Remember that a weighted point is defined as p′ = {px, py, pz, px2 + py2 + pz2 − w} ∈ ℝ4, where w is the weight (a real value) of the point p = {px, py, pz} ∈ ℝ3 [7].
-
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205859_629ee5f4_1259980.png "fig13.png")
+![fig13](https://images.gitee.com/uploads/images/2019/0109/205859_629ee5f4_1259980.png "fig13.png")
 
 Figure 13: Left: a set of 164 randomly distributed points in a unit cube. Right: the Delaunay tetrahedralization (shown in black edges) and Voronoi diagram (shown in colored faces).
 
@@ -275,7 +274,7 @@ Statistics:
 ```
 From the mesh statistics of the output (the last line), we can see that TetGen only added 1 Steiner point in the interior of the PLC. The input facets and segments are preserved.
 
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205917_d1431f85_1259980.png "fig14.png")
+![fig14](https://images.gitee.com/uploads/images/2019/0109/205917_d1431f85_1259980.png "fig14.png")
 
 Figure 14: An input PLC (cami1a.poly, left), the generated Steiner CDT (middle, -p switch) in which Steiner points are located on the boundary edges of the PLC, and a constrained tetrahedralization (right, -pY switch) in which Steiner points lie in the interior of the PLC.
 
@@ -288,13 +287,23 @@ cami1a.1.edge	The list of boundary edges of the CDT.
 ```
 Table 6: The output files by command: tetgen -p cami1a.poly
 
+if the -Y/// switch is the input boundary edges and faces of the PLC are preserved as much as possible in the generated tetrahedral mesh. Steiner points (if there exists any) will be added  in the middle of edges, but sometimes in the interior space of the PLC. For example, run the following command:
+
+```
+tetgen -pYY///1 cami1a.poly
+```
+
+This will produce a tetrahedral mesh of the PLC shown in Figure below:
+
+![fig14.2.png](https://images.gitee.com/uploads/images/2019/0110/211244_e30b7c5d_1259980.png "fig14.2.png")
+
 Other output switches are available by adding the switches: -f (output all faces including interior faces), -e (output all edges including interior edges), and -n (output the adjacency graph of the tetrahedra).
 
 #### Quality mesh generation (-q)
 
 The -q switch adds new points to improve the mesh quality. It can be used together with -p (to refine a CDT), or -r (to refine a previously generated mesh), -a, or -m (to conform to a mesh sizing function).
 
-TetGen enforces two quality constraints on tetrahedra: a maximum radius-edge ratio bound and a minimum dihedral angle bound. By default, these two constraints are 2.0 and 0 degrees, respectively. These quality constraints may be specified after the -q. The two constraints are separated by a slash ‘/’ (or ‘,’):
+TetGen enforces two quality constraints on tetrahedra: a maximum radius-edge ratio bound and a minimum dihedral angle bound. By default, these two constraints are 2.0 and 0 degrees, respectively. These quality constraints may be specified after the -q. The two constraints are separated by a slash '/'(or ','):
 
 - the first constraint is the maximum allowable radius-edge ratio, default is 2.0; and
 - the second constraint is the minimum allowable dihedral angle, default is 0 (degree);
@@ -347,7 +356,7 @@ Statistics:
   Steiner points on facets:  898
   Steiner points on segments:  3652
 ```
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205928_0075a2f2_1259980.png "fig15.png")
+![fig15](https://images.gitee.com/uploads/images/2019/0109/205928_0075a2f2_1259980.png "fig15.png")
 
 Figure 15: The quality tetrahedral meshes of a PLC (thepart.smesh) generated by the commands: -pq2/0, -pq1.4/0, and -pq1.1/0.
 
@@ -370,7 +379,7 @@ TetGen supports several ways of generating adaptive tetrahedral meshes. They hav
 
 Figure 16 shows two examples of the results of applying constraints on a facet and a segment, respectively.
 
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205936_3c5c112e_1259980.png "fig16.png")
+![fig16](https://images.gitee.com/uploads/images/2019/0109/205936_3c5c112e_1259980.png "fig16.png")
 
 Figure 16: Examples of applying facet and segment constraints (.var file).
 
@@ -384,9 +393,9 @@ When the -m switch is used, TetGen will read a .mtr file, which stores the nodal
 
 - The mesh element size is directly defined on the nodes of the input PLC (-p switch) or the nodes of the input mesh (-r switch). In this case, its file name is xxx.mtr, where xxx is the base file name of the input PLC or the input mesh, see Figure 17 for an example.
 - The mesh element size is defined on the nodes of a background mesh. In this case, there is a background mesh given by the files xxx.b.node, xxx.b.ele, and the mesh element size file xxx.b.mtr.
-​    
 
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205945_b805164c_1259980.png "fig17.png")
+
+![fig17](https://images.gitee.com/uploads/images/2019/0109/205945_b805164c_1259980.png "fig17.png")
 
 Figure 17: The tetrahedral meshes of a PLC (L.smesh) generated by the commands: -pqm. A sizing function (L.mtr) was applied on the nodes of the PLC. Both input files are found in Section 5.2.8.
 
@@ -401,7 +410,7 @@ The -r switch reconstructs an existing tetrahedral mesh. Usually, the purpose of
 - -r should not be used together with the -I.
 #### Mesh optimization (-O)
 
-The -O switch specifies a mesh optimization level and chooses the operations. Both are integers and are separated by a slash ‘/’.
+The -O switch specifies a mesh optimization level and chooses the operations. Both are integers and are separated by a slash ��
 
 The mesh optimization level is an integer ranged from 0 to 10, where 0 means no mesh optimization is executed. The larger the level is, the more mesh optimization iterations will be performed, and TetGen may run very slow. Default the mesh optimization level is 2.
 
@@ -427,7 +436,7 @@ The current objective function to be optimized by TetGen is to reduce the maximu
 
 The -R switch indicates that some vertices of an existing tetrahedral mesh are to be removed. TetGen provides two ways to indicate those vertices to be removed.
 
-- Vertices whose boundary markers (see .node file format) are ‘-1’ are to be removed.
+- Vertices whose boundary markers (see .node file format) are '-1' are to be removed.
 - When a mesh sizing function is supplied (-m switch), vertices whose mesh element sizes are too large are to be removed.
 
 The -R switch only removes vertices which can be removed. In particular, such vertices lie in the interior of the domain, or vertices lying in the interior of a facet or a segment. Note that this switch does not guarantee that all the marked vertices are successfully removed.
@@ -439,7 +448,7 @@ Once the mesh has been coarsened, the mesh quality may decrease. You may use the
 The -i switch indicates that a list of additional points is going to be inserted into an existing tetrahedral mesh. The list of additional nodes is read from files xxx.a.node, where xxx stands for the input file name (i.e., xxx.poly or xxx.smesh, or xxx.ele, ...). This switch is useful for refining a finite element or finite volume mesh using a list of user-defined points.
 
 - Points which lie in the exterior of the mesh domain are simply discarded.
-- TetGen uses a relative tolerance (set by -T switch) to check whether a point lies on the domain boundary or not, default it is 10−8.
+- TetGen uses a relative tolerance (set by -T switch) to check whether a point lies on the domain boundary or not, default it is 10-8.
 
 #### Assigning region attributes (-A)
 
@@ -447,13 +456,13 @@ The -A switch assigns an additional attribute (an integer number) to each tetrah
 
 Figure 18: The tetrahedral meshes of a PLC (ts80305_nd32_cell834.off) generated by the commands: -pqAa1e-12
 
-![输入图片说明](https://images.gitee.com/uploads/images/2019/0109/205957_02bdfa4a_1259980.png "fig18.png")
+![fig18](https://images.gitee.com/uploads/images/2019/0109/205957_02bdfa4a_1259980.png "fig18.png")
 
 Figure 18 shows an example of tetrahedral meshes of a PLC which contains several sub-domains.
 
 - A region attribute is an integer which can be either positive or negative. It must not be a zero, which is used for the exterior of the PLC.
 - User-defined attributes are assigned to regions by the .poly or .smesh file (in the region section). If a region is not explicitly marked by the .poly file or .smesh file, tetrahedra in that region are automatically assigned a non-zero attribute.
-- By default, the region attributes are numbered from 1, 2, 3, ⋯. If there are user-assigned region attributes (by the .poly or .smesh file), the region attributes are shifted by a number i, i.e., i+1, i+2, i+3, ⋯, where i is either 0 or the maximum integer of the user-assigned region attributes.
+- By default, the region attributes are numbered from 1, 2, 3, ... If there are user-assigned region attributes (by the .poly or .smesh file), the region attributes are shifted by a number i, i.e., i+1, i+2, i+3, ..., where i is either 0 or the maximum integer of the user-assigned region attributes.
 - The -A switch has an effect only if the -p switch is used and the -r switch is not.
 
 #### Mesh output switches (-f, -e, -n, -z, -o2)
@@ -462,13 +471,13 @@ TetGen provides various switches to output its mesh. They are summarized below.
 
 **-f**  The -f switch outputs all triangular faces (including interior faces) of the mesh into a .face file. Without -f, only the boundary faces or the convex hull faces are output.
 
-In the .face file, interior faces and boundary (or convex hull) faces are distinguished by their boundary markers. Each interior face has a boundary marker ‘0’. A non-zero boundary marker means a boundary or convex hull face.
+In the .face file, interior faces and boundary (or convex hull) faces are distinguished by their boundary markers. Each interior face has a boundary marker '0' A non-zero boundary marker means a boundary or convex hull face.
 
 **-e**  The -e switch outputs all mesh edges (including interior edges) of the mesh into a .edge file. Without -e, only the boundary edges are output.
 
-In the .edge file, interior edges and boundary edges are distinguished by their boundary markers. Each interior edge has a boundary marker ‘0’. A non-zero boundary marker means a boundary edge.
+In the .edge file, interior edges and boundary edges are distinguished by their boundary markers. Each interior edge has a boundary marker '0' A non-zero boundary marker means a boundary edge.
 
-**-n**  The -n switch outputs the neighboring tetrahedra to a .neigh file. Each tetrahedron has four neighbors. The first neighbor of this tetrahedron is opposite to the first of its corner, and so on. The neighbors are given by their indices in the corresponding .ele file. A ‘-1’ indicates that there is no neighbor at this face of the tetrahedron.
+**-n**  The -n switch outputs the neighboring tetrahedra to a .neigh file. Each tetrahedron has four neighbors. The first neighbor of this tetrahedron is opposite to the first of its corner, and so on. The neighbors are given by their indices in the corresponding .ele file. A '1' indicates that there is no neighbor at this face of the tetrahedron.
 
 If the -nn switch is used, TetGen also outputs the neighboring tetrahedra to each face of the mesh in the corresponding .face file.
 
@@ -478,7 +487,7 @@ If the -nn switch is used, TetGen also outputs the neighboring tetrahedra to eac
 
 #### Mesh statistics (-V)
 
-The -V switch gives detailed information about what TetGen is doing. More ‘V’s are increasing the amount of detail.
+The -V switch gives detailed information about what TetGen is doing. More 'V' are increasing the amount of detail.
 
 Specifically, -V gives information on algorithmic progress and more detailed statistics including a rough mesh quality report. Below is a screen output of the quality report.
 
@@ -491,36 +500,36 @@ Mesh quality statistics:
   Smallest dihedral:          5.587   |  Largest dihedral:       163.9413
 
   Aspect ratio histogram:
-​         < 1.5       :         5      |      6 - 10         :        33
-​     1.5 - 2         :       105      |     10 - 15         :         4
-​       2 - 2.5       :       228      |     15 - 25         :         1
-​     2.5 - 3         :       215      |     25 - 50         :         0
-​       3 - 4         :       321      |     50 - 100        :         0
-​       4 - 6         :       150      |    100 -            :         0
+        < 1.5       :         5      |      6 - 10         :        33
+    1.5 - 2         :       105      |     10 - 15         :         4
+      2 - 2.5       :       228      |     15 - 25         :         1
+    2.5 - 3         :       215      |     25 - 50         :         0
+      3 - 4         :       321      |     50 - 100        :         0
+      4 - 6         :       150      |    100 -            :         0
   (A tetrahedron's aspect ratio is its longest edge length divided by its
-​    smallest side height)
+   smallest side height)
 
   Face angle histogram:
-​      0 -  10 degrees:         0      |     90 - 100 degrees:       637
-​     10 -  20 degrees:       122      |    100 - 110 degrees:       131
-​     20 -  30 degrees:       556      |    110 - 120 degrees:       101
-​     30 -  40 degrees:       700      |    120 - 130 degrees:        44
-​     40 -  50 degrees:      1273      |    130 - 140 degrees:         5
-​     50 -  60 degrees:      1085      |    140 - 150 degrees:         1
-​     60 -  70 degrees:      1129      |    150 - 160 degrees:         0
-​     70 -  80 degrees:       871      |    160 - 170 degrees:         0
-​     80 -  90 degrees:       506      |    170 - 180 degrees:         0
+     0 -  10 degrees:         0      |     90 - 100 degrees:       637
+    10 -  20 degrees:       122      |    100 - 110 degrees:       131
+    20 -  30 degrees:       556      |    110 - 120 degrees:       101
+    30 -  40 degrees:       700      |    120 - 130 degrees:        44
+    40 -  50 degrees:      1273      |    130 - 140 degrees:         5
+    50 -  60 degrees:      1085      |    140 - 150 degrees:         1
+    60 -  70 degrees:      1129      |    150 - 160 degrees:         0
+    70 -  80 degrees:       871      |    160 - 170 degrees:         0
+    80 -  90 degrees:       506      |    170 - 180 degrees:         0
 
   Dihedral angle histogram:
-​       0 -  5 degrees:         0      |     80 - 110 degrees:      1675
-​       5 - 10 degrees:        10      |    110 - 120 degrees:       228
-​      10 - 20 degrees:       141      |    120 - 130 degrees:       149
-​      20 - 30 degrees:       362      |    130 - 140 degrees:        92
-​      30 - 40 degrees:       487      |    140 - 150 degrees:        77
-​      40 - 50 degrees:       762      |    150 - 160 degrees:        32
-​      50 - 60 degrees:       770      |    160 - 170 degrees:         7
-​      60 - 70 degrees:       812      |    170 - 175 degrees:         0
-​      70 - 80 degrees:       768      |    175 - 180 degrees:         0
+      0 -  5 degrees:         0      |     80 - 110 degrees:      1675
+      5 - 10 degrees:        10      |    110 - 120 degrees:       228
+     10 - 20 degrees:       141      |    120 - 130 degrees:       149
+     20 - 30 degrees:       362      |    130 - 140 degrees:        92
+     30 - 40 degrees:       487      |    140 - 150 degrees:        77
+     40 - 50 degrees:       762      |    150 - 160 degrees:        32
+     50 - 60 degrees:       770      |    160 - 170 degrees:         7
+     60 - 70 degrees:       812      |    170 - 175 degrees:         0
+     70 - 80 degrees:       768      |    175 - 180 degrees:         0
 ```
 To get the statistics for an existing mesh, run TetGen on that mesh with the -rNEF switches to read the mesh and print the statistics without writing any file.
 
@@ -543,14 +552,14 @@ Memory usage statistics:
 TetGen allocates memory in blocks. Each block is a chunk of memory allocated once. It stores a number of mesh entities, i.e., vertices, tetrahedra, boundary faces, and boundary edges. TetGen will dynamically allocate new blocks when they are needed.
 
 By default, each block consists of 8188 tetrahedra. This data size may be too small for generating large meshes. This may slow down the performance of TetGen. The -x switch allows users to set the desired number of elements allocated in one block.
+If the -V switch is used, TetGen will report its memory usage, see Section 4.2.11. A hint to enlarge the block size can be seen from the "Maximum number of tet blocks" (the second line in this report). If this number is large (for example 10000), it is reasonable to enlarge the block size.
 
-If the -V switch is used, TetGen will report its memory usage, see Section 4.2.11. A hint to enlarge the block size can be seen from the “Maximum number of tet blocks” (the second line in this report). If this number is large (for example 10000), it is reasonable to enlarge the block size.
 
 #### Miscellaneous
 
 **-c**  The -c switch keeps the convex hull of the tetrahedral mesh. By default, TetGen removes all tetrahedra which do not lie in the interior of the PLC (the domain) which may have an arbitrary shape and topology, i.e., it may be non-convex and may contain holes. If the -c switch is used, tetrahedra in the exterior of the PLC are not removed. The union of the mesh elements is a topological ball.
 
-TetGen assigns to all exterior tetrahedra a region attribute ‘-1’, so that they can be distinguished from the interior tetrahedra.
+TetGen assigns to all exterior tetrahedra a region attribute -1 so that they can be distinguished from the interior tetrahedra.
 
 **-S**  The -S switch specifies a maximum number of Steiner points (points that are not in the input) which are added by mesh refinement to improve the mesh quality. The default is to allow an unlimited number of Steiner points.
 
@@ -558,7 +567,7 @@ TetGen assigns to all exterior tetrahedra a region attribute ‘-1’, so that t
 
 **-I**  With the -I switch, TetGen does not use the iteration numbers. It suppresses the output of .node file, so your input file will not be overwritten. It cannot be used with the -r switch, because that would overwrite your input .ele file. It shouldn’t be used with the -q switch if one is using a .node file for input, because no .node file is written, so there is no record of any added Steiner points.
 
-**-T**  The -T switch sets a user-defined tolerance used by many computations of TetGen, default is 10−8.
+**-T**  The -T switch sets a user-defined tolerance used by many computations of TetGen, default is 10-8.
 
 In principle, the vertices which are used to define a facet of a PLC should be exactly coplanar. But this is very hard to achieve in practice due to the inconsistent nature of the floating-point format used in computers.
 
