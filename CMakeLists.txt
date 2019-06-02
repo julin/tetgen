@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.12)
 set(MODULE_NAME tetgen)
 
 
-add_library(${MODULE_NAME} STATIC tetgen.h tetgen.cxx predicates.cxx)
+add_library(${MODULE_NAME} STATIC tetgen.h tetgen.cxx predicates.cxx tetgenext.cxx)
 
 configure_runtime()
 
